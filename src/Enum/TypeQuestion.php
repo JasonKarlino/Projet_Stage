@@ -8,7 +8,7 @@ enum TypeQuestion: string
     case QCU = 'QCU';
     case QB = 'QB';
 
-    public function label(): string
+    public function getLabel(): string
     {
         return match($this) {
             self::QCM => 'Question à Choix Multiples',

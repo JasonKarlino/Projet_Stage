@@ -12,7 +12,11 @@
     <h1>Ajout d'enseignant</h1>
 
     {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {{ form_row(form.nomPrenom, {label: 'Nom et prénoms'}) }}
+    {{ form_row(form.matricule, {label: 'Matricule'}) }}
+    {{ form_row(form.grade, {label: 'Grade'}) }}
+    {{ form_row(form.mail, {label: 'Email'}) }}
+    {{ form_row(form.contact, {label: 'Contact'}) }}
     {{ form_end(form) }}
     
 </div>

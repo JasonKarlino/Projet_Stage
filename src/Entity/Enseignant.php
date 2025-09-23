@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\EnseignantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Enum\Grade;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EnseignantRepository::class)]
@@ -15,23 +17,41 @@ class Enseignant
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\Length(
+        min: 10,
+        max: 50,
+        minMessage: 'Le nom doit faire au moins {{ limit }} caractères',
+        maxMessage: 'Le nom ne peut pas dépasser {{ limit }} caractères',
+    )]
+    #[Assert\NotBlank(message: 'Le nom et les prénoms sont obligatoires')]
     #[ORM\Column(length: 255)]
-    private ?string $nom = null;
+    private ?string $nomPrenom = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $prenoms = null;
-
+    #[Assert\Type(type: 'integer', message: 'Le matricule doit être un nombre entier')]
+    #[Assert\NotBlank(message: 'Le matricule est obligatoire')]
     #[ORM\Column]
     private ?int $matricule = null;
 
+    #[Assert\NotBlank(message: 'Le grade est obligatoire')]
     #[ORM\Column(length: 255)]
-    private ?string $grade = null;
+    private ?Grade $grade = null;
 
+    #[Assert\Email(message: 'L\'adresse email "{{ value }}" n\'est pas valide.')]
+    #[Assert\NotBlank(message: 'L\'adresse email est obligatoire')]
     #[ORM\Column(length: 255)]
     private ?string $mail = null;
 
+    #[Assert\Type(type: 'integer', message: 'Le contact doit être un nombre entier')]
+    #[Assert\Length(
+        min: 8,
+        max: 8,
+        minMessage: 'Le contact doit faire au moins {{ limit }} chiffres',
+        maxMessage: 'Le contact ne peut pas dépasser {{ limit }} chiffres',
+    )]
+    #[Assert\NotBlank(message: 'Le contact est obligatoire')]
+    #[Assert\Positive(message: 'Le contact doit être un nombre positif')]
     #[ORM\Column(length: 255)]
-    private ?string $contact = null;
+    private ?int $contact = null;
 
     /**
      * @var Collection<int, Sujet>
@@ -49,26 +69,14 @@ class Enseignant
         return $this->id;
     }
 
-    public function getNom(): ?string
+    public function getNomPrenom(): ?string
     {
-        return $this->nom;
+        return $this->nomPrenom;
     }
 
-    public function setNom(string $nom): static
+    public function setNomPrenom(string $nom): static
     {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getPrenoms(): ?string
-    {
-        return $this->prenoms;
-    }
-
-    public function setPrenoms(string $prenoms): static
-    {
-        $this->prenoms = $prenoms;
+        $this->nomPrenom = $nom;
 
         return $this;
     }
@@ -85,12 +93,12 @@ class Enseignant
         return $this;
     }
 
-    public function getGrade(): ?string
+    public function getGrade(): ?Grade
     {
         return $this->grade;
     }
 
-    public function setGrade(string $grade): static
+    public function setGrade(Grade $grade): static
     {
         $this->grade = $grade;
 
@@ -109,12 +117,12 @@ class Enseignant
         return $this;
     }
 
-    public function getContact(): ?string
+    public function getContact(): ?int
     {
         return $this->contact;
     }
 
-    public function setContact(string $contact): static
+    public function setContact(int $contact): static
     {
         $this->contact = $contact;
 

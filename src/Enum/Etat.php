@@ -8,7 +8,7 @@ enum Etat: string
     case Valide = 'Validé';
     case Rejet = 'Refusé';
 
-    public function label(): string
+    public function getLabel(): string
     {
         return match($this) {
             self::Traitement => 'En cours de validation',

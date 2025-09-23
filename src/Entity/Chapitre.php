@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ChapitreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ChapitreRepository::class)]
@@ -15,6 +16,13 @@ class Chapitre
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message: 'Le titre est obligatoire')]
+    #[Assert\Length(
+        min: 3,
+        max: 255,
+        minMessage: 'Le titre doit faire au moins {{ 3 }} caractères',
+        maxMessage: 'Le titre ne peut pas dépasser {{ 255 }} caractères',
+    )]
     #[ORM\Column(length: 255)]
     private ?string $titre = null;
 
@@ -27,6 +35,16 @@ class Chapitre
      */
     #[ORM\OneToMany(targetEntity: Question::class, mappedBy: 'chapitre', orphanRemoval: true)]
     private Collection $questions;
+
+    #[Assert\NotBlank(message: 'Le contenu est obligatoire')]
+    #[Assert\Length(
+        min: 10,
+        max: 10000,
+        minMessage: 'Le contenu doit faire au moins {{ 10 }} caractères',
+        maxMessage: 'Le contenu ne peut pas dépasser {{ 10000 }} caractères',
+    )]
+    #[ORM\Column(length: 10000)]
+    private ?string $contenu = null;
 
     public function __construct()
     {
@@ -88,6 +106,18 @@ class Chapitre
                 $question->setChapitre(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getContenu(): ?string
+    {
+        return $this->contenu;
+    }
+
+    public function setContenu(string $contenu): static
+    {
+        $this->contenu = $contenu;
 
         return $this;
     }
