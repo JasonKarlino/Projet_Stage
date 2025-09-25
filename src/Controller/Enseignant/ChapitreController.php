@@ -31,4 +31,12 @@ final class ChapitreController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    #[Route('/show/{id}', name: 'app_enseignant_chapitre_show', methods: ['GET'])]
+    public function show(?Chapitre $chapitre): Response
+    {
+        return $this->render('enseignant/chapitre/show.html.twig', [
+            'chapitre' => $chapitre,
+        ]);
+    }
 }
