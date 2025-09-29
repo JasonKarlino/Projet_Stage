@@ -30,6 +30,7 @@
     {% else %}
         <div>Enseignant non trouvé</div>
     {% endif %}
-    <a href="{{ path('app_admin_enseignant_list') }}" class="btn btn-primary">Retour à la liste des enseignants</a>
+    <a href="{{ path('app_admin_enseignant_show_ues', {id : enseignant.id}) }}" class="btn btn-primary">Voir la liste des Ues</a>
+    <a href="{{ path('app_admin_enseignant_list') }}" class="btn btn-primary">Retourner à la liste des enseignants</a>
 </div>
 {% endblock %}

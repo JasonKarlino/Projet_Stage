@@ -51,4 +51,12 @@ final class EnseignantController extends AbstractController
             'enseignant' => $enseignant,
         ]);
     }
+
+    #[Route('/show/ues/{id}', name: 'app_admin_enseignant_show_ues', methods: ['GET'])]
+    public function showUes(?Enseignant $enseignant): Response
+    {
+        return $this->render('admin/enseignant/show_ues.html.twig', [
+            'enseignant' => $enseignant,
+        ]);
+    }
 }

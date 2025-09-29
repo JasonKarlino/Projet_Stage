@@ -59,9 +59,16 @@ class Enseignant
     #[ORM\OneToMany(targetEntity: Sujet::class, mappedBy: 'enseignant')]
     private Collection $sujets;
 
+    /**
+     * @var Collection<int, UE>
+     */
+    #[ORM\OneToMany(targetEntity: UE::class, mappedBy: 'enseignant', orphanRemoval: true)]
+    private Collection $uEs;
+
     public function __construct()
     {
         $this->sujets = new ArrayCollection();
+        $this->uEs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -153,6 +160,36 @@ class Enseignant
             // set the owning side to null (unless already changed)
             if ($sujet->getEnseignant() === $this) {
                 $sujet->setEnseignant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UE>
+     */
+    public function getUEs(): Collection
+    {
+        return $this->uEs;
+    }
+
+    public function addUE(UE $uE): static
+    {
+        if (!$this->uEs->contains($uE)) {
+            $this->uEs->add($uE);
+            $uE->setEnseignant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUE(UE $uE): static
+    {
+        if ($this->uEs->removeElement($uE)) {
+            // set the owning side to null (unless already changed)
+            if ($uE->getEnseignant() === $this) {
+                $uE->setEnseignant(null);
             }
         }
 

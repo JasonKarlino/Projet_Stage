@@ -60,9 +60,21 @@ class UE
     #[ORM\Column(length: 255)]
     private ?string $intitule = null;
 
+    #[Assert\NotBlank(message: 'L\'enseignant est obligatoire')]
+    #[ORM\ManyToOne(inversedBy: 'uEs')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Enseignant $enseignant = null;
+
+    /**
+     * @var Collection<int, Sujet>
+     */
+    #[ORM\OneToMany(targetEntity: Sujet::class, mappedBy: 'ue')]
+    private Collection $sujets;
+
     public function __construct()
     {
         $this->chapitres = new ArrayCollection();
+        $this->sujets = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -156,6 +168,48 @@ class UE
     public function setIntitule(string $intitule): static
     {
         $this->intitule = $intitule;
+
+        return $this;
+    }
+
+    public function getEnseignant(): ?Enseignant
+    {
+        return $this->enseignant;
+    }
+
+    public function setEnseignant(?Enseignant $enseignant): static
+    {
+        $this->enseignant = $enseignant;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Sujet>
+     */
+    public function getSujets(): Collection
+    {
+        return $this->sujets;
+    }
+
+    public function addSujet(Sujet $sujet): static
+    {
+        if (!$this->sujets->contains($sujet)) {
+            $this->sujets->add($sujet);
+            $sujet->setUe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSujet(Sujet $sujet): static
+    {
+        if ($this->sujets->removeElement($sujet)) {
+            // set the owning side to null (unless already changed)
+            if ($sujet->getUe() === $this) {
+                $sujet->setUe(null);
+            }
+        }
 
         return $this;
     }

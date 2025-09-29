@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Ues de l'enseignant {{enseignant.nomPrenom}}{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 500px; width: 95%; font: 18px/1.5 droid-sérif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Liste des Ues de l'enseignant {{enseignant.nomPrenom}}</h1>
+    <ul class="list-group list-group-flush">
+        {% for ue in enseignant.ues %}
+            <div class="card mb-1">
+                <div class="card-body">
+                    <div class="card-title d-flex justify-content-between">
+                            <h4 class="mb-1">{{ ue.code }}</h4>
+                        <small class="text-muted">Identifiant : {{ ue.id }}</small>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </ul> 
+    <a href="{{ path('app_admin_enseignant_show', {id : enseignant.id}) }}" class="btn btn-primary">Retourner à l'enseignant</a>
+</div>
+{% endblock %}
