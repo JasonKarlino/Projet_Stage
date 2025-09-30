@@ -44,6 +44,13 @@ class EnseignantType extends AbstractType
                     'placeholder' => 'Entrez l\'adresse email',
                 ],
             ])
+            ->add('motDePasse', TextType::class, [
+                'label' => 'Mot de passe',
+                'attr' => [
+                    'placeholder' => 'Entrez le mot de passe',
+                ],
+            ])
+
             ->add('contact', NumberType::class, [
                 'label' => 'Contact',
                 'attr' => [

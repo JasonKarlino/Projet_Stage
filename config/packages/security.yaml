@@ -1,17 +1,31 @@
 security:
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
-        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+        App\Entity\Enseignant:
+            algorithm: auto
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-        users_in_memory: { memory: null }
+         enseignants:
+            entity:
+                class: App\Entity\Enseignant
+                property: mail  
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             lazy: true
-            provider: users_in_memory
+            provider: enseignants
+            form_login:
+                login_path: app_enseignant_login
+                check_path: app_enseignant_login
+                default_target_path: /
+                username_parameter: mail
+                password_parameter: motDePasse
+            logout:
+                path: app_enseignant_logout
+                target: app_welcome
+                invalidate_session: true
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -22,6 +36,9 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        - {path: ^/enseignant/login, roles: PUBLIC_ACCESS }
+        - {path: ^/enseignant/logout, roles: PUBLIC_ACCESS }
+        - {path: ^/enseignant, roles: ROLE_ENSEIGNANT }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 

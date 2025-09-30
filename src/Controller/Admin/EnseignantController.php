@@ -9,20 +9,33 @@ use App\Form\EnseignantType;
 use App\Repository\EnseignantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/admin/enseignant')]
 final class EnseignantController extends AbstractController
 {
     #[Route('/new', name: 'app_admin_enseignant_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager , UserPasswordHasherInterface $passwordHasher): Response
     {
         $enseignant = new Enseignant();
         $form = $this->createForm(EnseignantType::class, $enseignant);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+           
             $enseignant = $form->getData();
+
+            $plainPassword = $enseignant->getMotDePasse();
+            $mail = $enseignant->getMail();
+
+            $enseignant->setMail($mail);
+
+            $hashedPassword = $passwordHasher->hashPassword($enseignant, $plainPassword);
+            $enseignant->setMotDePasse($hashedPassword);
+
+            $enseignant->setRoles(['ROLE_ENSEIGNANT']);
+
             $entityManager->persist($enseignant);
             $entityManager->flush();
 
