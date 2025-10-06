@@ -1,10 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Création de sujet{% endblock %}
-
-{% block link %} 
-    <link href="{{ asset('icons/sujet.ico') }}" rel="icon" />
-{% endblock %}
+{% block title %}Hello AdminController!{% endblock %}
 
 {% block body %}
 <style>
@@ -13,11 +9,14 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Remplissez les informations requises pour générer le sujet</h1>
+    <h1>Ajout d'administrateur</h1>
 
     {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {{ form_row(form.nomPrenom, {label: 'Nom et prénoms'}) }}
+    {{ form_row(form.mail, {label: 'Email'}) }}
+    {{ form_row(form.motDePasse, {label: 'Mot de passe'}) }}
     {{ form_end(form) }}
-
+    
 </div>
+
 {% endblock %}

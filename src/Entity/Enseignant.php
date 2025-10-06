@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\EnseignantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Enum\Grade;
 use Doctrine\ORM\Mapping as ORM;
@@ -250,6 +249,20 @@ class Enseignant implements UserInterface, PasswordAuthenticatedUserInterface
     public function getPassword(): ?string
     {
         return $this->motDePasse;
+    }
+
+    // Champ temporaire : non persisté, utilisé uniquement dans les formulaires
+    private ?string $plainPassword = null;
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(?string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+        return $this;
     }
 
 }
