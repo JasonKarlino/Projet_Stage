@@ -15,7 +15,7 @@ final class ChapitreController extends AbstractController
 {
     #[Route('/new', name: 'app_enseignant_chapitre_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
+    { 
         $chapitre = new Chapitre();
         $form = $this->createForm(ChapitreType::class, $chapitre);
         $form->handleRequest($request);

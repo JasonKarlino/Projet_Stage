@@ -17,11 +17,21 @@ final class UEController extends AbstractController
     #[Route('/new', name: 'app_enseignant_ue_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $ue = new UE();
-        $form = $this->createForm(UEType::class, $ue);
-        $form->handleRequest($request);
+        $enseignant = $this->getUser(); 
 
+        if (!$enseignant) {
+            throw $this->createAccessDeniedException('Vous devez être connecté.');
+        }
+
+        $ue = new UE();
+        $form = $this->createForm(UEType::class, $ue, [
+            'enseignant_connecte' => $enseignant, 
+        ]);
+
+        $form->handleRequest($request);
+ 
         if ($form->isSubmitted() && $form->isValid()) {
+            $ue->setEnseignant($this->getUser());
             $entityManager->persist($ue);
             $entityManager->flush();
 
@@ -37,9 +47,16 @@ final class UEController extends AbstractController
     #[Route('/list', name: 'app_enseignant_ue_list', methods: ['GET'])]
     public function list(UERepository $uerepository): Response
     {
-        $ues = $uerepository->findAll();
+        $enseignant = $this->getUser(); 
+
+        if (!$enseignant) {
+            throw $this->createAccessDeniedException('Vous devez être connecté.');
+        }
+
+        $ues = $uerepository->findBy(['enseignant' => $enseignant]);
         return $this->render('enseignant/ue/list.html.twig', [
             'ues' => $ues,
+            'enseignant' => $enseignant,
         ]);
     }
 

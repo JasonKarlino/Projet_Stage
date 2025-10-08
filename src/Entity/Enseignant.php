@@ -240,10 +240,10 @@ class Enseignant implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getSalt(): ?string { 
         return null; 
-    } // bcrypt/argon2i doesn't need salt
+    } 
 
     public function eraseCredentials() : void{
-         /* nothing to do */ 
+         
     }
 
     public function getPassword(): ?string
@@ -251,7 +251,7 @@ class Enseignant implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->motDePasse;
     }
 
-    // Champ temporaire : non persisté, utilisé uniquement dans les formulaires
+   
     private ?string $plainPassword = null;
 
     public function getPlainPassword(): ?string

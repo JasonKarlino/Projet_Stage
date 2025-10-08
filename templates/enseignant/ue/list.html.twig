@@ -9,7 +9,12 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Liste des Ues de l'Enseignant</h1>
+    <h1>Bienvenue Mr/Mme {{enseignant.nomPrenom}}, voici la liste de vos Ues</h1>
+    {% if ues is empty %}
+        <p class="text-muted">Vous n'avez aucune UE pour le moment.</p>
+    {% else %}
+        <p class="text-muted">Vous avez actuellement {{ ues|length }} Ue{{ ues|length > 1 ? 's' : '' }}.</p>
+    {% endif %}
     <ul class="list-group list-group-flush">
         {% for ue in ues %}
             <div class="card mb-1">
@@ -24,5 +29,6 @@
             </div>
         {% endfor %}
     </ul> 
+    <a href="{{ path('app_enseignant_ue_new') }}" class="btn btn-primary">Ajouter une UE</a>
 </div>
 {% endblock %}

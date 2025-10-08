@@ -42,7 +42,7 @@ security:
             form_login:
                 login_path: app_enseignant_login
                 check_path: app_enseignant_login
-                default_target_path: /
+                default_target_path: /enseignant/ue/list
                 username_parameter: mail
                 password_parameter: motDePasse
             logout:

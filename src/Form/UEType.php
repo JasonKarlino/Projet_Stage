@@ -16,6 +16,7 @@ class UEType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $enseignantConnecte = $options['enseignant_connecte'];
         $builder
             ->add('code', TextType::class, [
                 'label' => 'Code de l\'Ue'
@@ -35,6 +36,10 @@ class UEType extends AbstractType
             ->add('enseignant', EntityType::class, [
                 'class' => Enseignant::class,
                 'choice_label' => 'nomPrenom',
+                'data' => $enseignantConnecte, 
+                'disabled' => true,            
+                'label' => 'Enseignant',
+                'mapped' => true, 
             ])
             ->add('ajouter', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary mt-3'],
@@ -46,6 +51,7 @@ class UEType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => UE::class,
+            'enseignant_connecte' => null,
         ]);
     }
 }

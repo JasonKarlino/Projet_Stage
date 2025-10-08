@@ -10,6 +10,11 @@
 
 <div class="example-wrapper">
     <h1>Liste des chapitres de l'Ue : {{ue.code}}</h1>
+        {% if ue.chapitres is empty %}
+            <p class="text-muted">Cette UE n'a aucun chapitre pour le moment.</p>
+        {% else %}
+            <p class="text-muted">Cette UE contient actuellement {{ ue.chapitres|length }} chapitre{{ ue.chapitres|length > 1 ? 's' : '' }}.</p>
+        {% endif %}
     <ul class="list-group list-group-flush">
         {% for chapitre in ue.chapitres %}
             <div class="card mb-1">
@@ -23,7 +28,8 @@
                 </div>
             </div>
         {% endfor %}
-    </ul> 
-      <a href="{{ path('app_enseignant_ue_show', {id : ue.id}) }}" class="btn btn-primary">Retourner à l'UE</a>
+    </ul>
+    <a href="{{ path('app_enseignant_chapitre_new') }}" class="btn btn-primary">Ajouter un chapitre</a> 
+    <a href="{{ path('app_enseignant_ue_show', {id : ue.id}) }}" class="btn btn-primary">Retourner à l'UE</a>
 </div>
 {% endblock %}

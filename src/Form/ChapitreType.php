@@ -16,6 +16,7 @@ class ChapitreType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $ueConnecte = $options['ue_connecte'];
         $builder
             ->add('titre', TextType::class, [
                 'label' => 'Titre du chapitre'
@@ -26,8 +27,11 @@ class ChapitreType extends AbstractType
             ->add('ue', EntityType::class, [
                 'class' => UE::class,
                 'choice_label' => 'code',
+                'data' => $ueConnecte, 
+                'disabled' => true,            
+                'label' => 'UE'
             ])
-            ->add('Ajouter', SubmitType::class, [
+            ->add('Ajouter', SubmitType::class, [ 
                 'attr' => ['class' => 'btn btn-primary mt-3']
                 ])
         ;
@@ -37,6 +41,7 @@ class ChapitreType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Chapitre::class,
+            'ue_connecte' => null,
         ]);
     }
 }
