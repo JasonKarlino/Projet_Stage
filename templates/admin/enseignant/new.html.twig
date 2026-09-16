@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout d'un Enseignant{% endblock %}
+{% block link %} <link rel="icon" href="{{ asset('icons/prof.ico') }}"> {% endblock %}
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 500px; width: 95%; font: 18px/1.5 droid-sérif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Ajout d'enseignant</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.nomPrenom, {label: 'Nom et prénoms'}) }}
+    {{ form_row(form.matricule, {label: 'Matricule'}) }}
+    {{ form_row(form.grade, {label: 'Grade'}) }}
+    {{ form_row(form.mail, {label: 'Email'}) }}
+    {{ form_row(form.contact, {label: 'Contact'}) }}
+    {{ form_row(form.motDePasse, {label: 'Mot de passe'}) }}
+    {{ form_end(form) }}
+    
+</div>
+{% endblock %}

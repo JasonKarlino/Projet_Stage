@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Ue de l'Enseignant{% endblock %}
+{% block link %} <link rel="icon" href="{{ asset('icons/liste.ico') }}"> {% endblock %}
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 500px; width: 95%; font: 18px/1.5 droid-sérif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Bienvenue Mr/Mme {{enseignant.nomPrenom}}, voici la liste de vos Ues</h1>
+    {% if ues is empty %}
+        <p class="text-muted">Vous n'avez aucune UE pour le moment.</p>
+    {% else %}
+        <p class="text-muted">Vous avez actuellement {{ ues|length }} Ue{{ ues|length > 1 ? 's' : '' }}.</p>
+    {% endif %}
+    <ul class="list-group list-group-flush">
+        {% for ue in ues %}
+            <div class="card mb-1">
+                <div class="card-body">
+                    <div class="card-title d-flex justify-content-between">
+                        <a href="{{ path('app_enseignant_ue_show', {id: ue.id}) }}" class="stretched-link link-blue">
+                            <h4 class="mb-1">{{ ue.code }}</h4>
+                        </a>
+                        <small class="text-muted">Identifiant : {{ ue.id }}</small>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </ul> 
+    <a href="{{ path('app_enseignant_ue_new') }}" class="btn btn-primary">Ajouter une UE</a>
+</div>
+{% endblock %}

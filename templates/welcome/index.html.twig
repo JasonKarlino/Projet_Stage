@@ -1,0 +1,32 @@
+{% extends 'welcome/welcome.html.twig' %}
+
+{% block title %}Bienvenue sur Schelp{% endblock %}
+
+{% block body %}
+<header class="bg-primary bg-gradient text-white">
+        <div class="container px-4 text-center">
+            <h1 class="fw-bolder">Schelp</h1>
+            <p class="lead">La plateforme éducative destinée au professeurs de l'EPL</p>
+            <a class="btn btn-lg btn-light" href="enseignant/login">Se connecter</a>
+        </div>
+    </header>
+    <!-- About section-->
+    <section id="about">
+        <div class="container px-4">
+            <div class="row gx-4 justify-content-center">
+                <div class="col-lg-8">
+                    <h2>Schelp: qu'est-ce que c'est?</h2>
+                    <p class="lead">Schelp est la plateforme officielle de gestion de questions et de sujets d'examen des enseignants de l'EPL</p>
+                    <p>Fonctionnalités clés :</p>
+                    <ul>
+                        <li>Ajout de questions dans la base de données(via un formulaire ou fichier excel)</li>
+                        <li>Gestion des Ues et des Chapitres</li>
+                        <li>Consultation en temps réel des questions proposées par les étudiants</li>
+                        <li>Génération efficace des sujets d'examen</li>
+                        <li>Suivi de la progression des étudiants</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
